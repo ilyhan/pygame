@@ -16,7 +16,7 @@ class Render:
         text_rect = text_obj.get_rect(center=(x, y))
         surface.blit(text_obj, text_rect)
 
-    def load_gif(filename):
+    def load_bg(filename):
         image = Image.open(filename)
         frames = []
         try:

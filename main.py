@@ -234,13 +234,13 @@ def resume_game():
 
 # Вызов функции pause_menu() в game_loop()
 def game_loop(difficulty):
-    global frame_traffic_index, explosion_active, frame_boom_index, explosion_pos
+    global frame_traffic_index, explosion_active, frame_boom_index, explosion_pos, get_money_active
     score = 0
     burans.enemies = []
     spawn_timer = 0
     explosion_active = False  
     global pause_background
-
+    get_money_active = False
 
     # Определяем скорость в зависимости от сложности
     speed_factor = 0.5 if difficulty == "Легкий" else 0.8 if difficulty == "Средний" else 1.2 
@@ -284,12 +284,33 @@ def game_loop(difficulty):
             if enemy_rect.top > HEIGHT:
                 burans.enemies.remove(enemy)
 
+        #обновление денег
+        for money in burans.money:
+            money_rect, enemy_money = money
+            money_rect.y += enemy_speed[difficulty]
+            if money_rect.top > HEIGHT:
+                burans.money.remove(money)
+
+        # проверка получения денег
+        for money in burans.money:
+            if player.colliderect(money[0]):
+                get_money_active = True
+                burans.money.remove(money)
+                explosion_pos = player.topleft
+                break
+
         # Проверка столкновений
         for enemy in burans.enemies:
             if player.colliderect(enemy[0]):
                 explosion_active = True
                 explosion_pos = player.topleft
                 break
+
+        #увелечение счетчика денег
+        if get_money_active:
+            get_money_active = False
+            sound.button_sound_1.play()
+            score += 1
 
         # Отрисовка взрыва
         if explosion_active:
@@ -304,11 +325,14 @@ def game_loop(difficulty):
 
         # Отрисовка самолета, если нет взрыва
         if not explosion_active:
-            score += 1
-            screen.blit(player_car, player.topleft)
+            screen.blit(player_buran, player.topleft)
             for enemy in burans.enemies:
                 enemy_rect, enemy_car = enemy
                 screen.blit(enemy_car, enemy_rect.topleft)
+            for money in burans.money:
+                money_rect, enemy_money = money
+                screen.blit(enemy_money, money_rect.topleft)
+
 
         pygame.display.flip()
         clock.tick(FPS)

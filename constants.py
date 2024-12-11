@@ -30,9 +30,9 @@ sound_icon_on_off = pygame.image.load(r"assets\images\sound-on-off.png")
 back_icon = pygame.image.load(r"assets\images\back.png")
 background_level = pygame.image.load(r"assets\images\background-level.jpg")
 background_rule = pygame.image.load(r"assets\images\background-rule.png")
-background_start = Render.load_gif(r"assets\images\background-start.png")
-background_traffic = Render.load_gif(r"assets\images\background-traffic.png")
-background_boom = Render.load_gif(r"assets\images\background-boom.gif")
+background_start = Render.load_bg(r"assets\images\background-start.png")
+background_traffic = Render.load_bg(r"assets\images\background-traffic.png")
+background_boom = Render.load_bg(r"assets\images\background-boom.gif")
 frame_start_index = frame_traffic_index = 0
 frame_start_count = len(background_start)
 frame_traffic_count = len(background_traffic)
@@ -41,7 +41,7 @@ frame_boom_count = len(background_boom)
 explosion_active = False
 explosion_pos = (0, 0)
 
-player_car = pygame.image.load(r"assets\images\meteors\player.png")
+player_buran = pygame.image.load(r"assets\images\meteors\player.png")
 
 # FPS
 clock = pygame.time.Clock()
@@ -50,6 +50,7 @@ FPS = 60
 # Размеры и скорость самолета и метеоритов
 PLAYER_SIZE = (70, 70)
 ENEMY_SIZE = (60, 60)
+MONEY_SIZE = (30, 30)
 enemy_speed = {"Легкий": 5, "Средний": 8, "Сложный": 12}
 
 # Игрок
@@ -67,3 +68,5 @@ enemy_burans = [
     pygame.image.load(r"assets\images\meteors\meteor-9.png"),
     pygame.image.load(r"assets\images\meteors\meteor-10.png"),
 ]
+
+money_coin = pygame.image.load(r"assets\images\coin.png")
